@@ -32,7 +32,7 @@ export default function SessionPage({
   // Day 2: hardcode a single “demo” problem.
   const problem = useMemo(() => {
     return {
-      title: "Sample Problem 1",
+      title: "Bronze Training – Sample Problem",
       prompt:
         "You are given N numbers. Determine a property of the sequence.\n" +
         "(Placeholder prompt — replace with a real Bronze statement soon.)",
@@ -189,6 +189,14 @@ export default function SessionPage({
           <h1 className="text-3xl font-bold">{problem.title}</h1>
           <p className="text-gray-600 dark:text-gray-300 mt-1">
             Step {stepIndex + 1} / {steps.length}: {step.title}
+            {/* Progress Bar */}
+            <div className="mt-4 w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
+            <div
+            className="bg-blue-600 h-2 rounded-full transition-all"
+            style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }}
+            />
+            </div>
+
           </p>
         </div>
 
