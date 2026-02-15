@@ -1,0 +1,88 @@
+# Lesson Schema
+
+Lessons in Algo-Coach follow a consistent structure so they can be rendered dynamically in the frontend.
+
+Each lesson should teach one concept clearly and guide the user through reasoning before coding.
+
+---
+
+## Required Fields
+
+Title  
+Division  
+Concept  
+Difficulty  
+
+---
+
+## Lesson Sections
+
+1. Problem Summary  
+A short explanation of the problem in your own words.
+
+2. Model Before Code Questions  
+Questions that guide the student to think before coding:
+- What type of problem is this?
+- What variables define the state?
+- What data structures are useful?
+- What is the expected time complexity?
+- What edge cases might break a solution?
+
+3. Hint Ladder  
+A sequence of progressive hints:
+- Hint 1: Directional guidance
+- Hint 2: More concrete guidance
+- Hint 3: Key insight
+
+4. Common Mistakes  
+Examples:
+- Off-by-one errors
+- Wrong loop bounds
+- Forgetting to reset variables
+
+5. Explanation  
+Clear explanation of the reasoning and approach.
+
+---
+
+## Example Lesson Structure (JSON-style)
+
+{
+  "title": "Simulation Basics",
+  "division": "Bronze",
+  "concept": "Simulation",
+  "difficulty": "Easy",
+
+  "summary": "Guide cows moving step by step according to rules and determine the final positions.",
+
+  "modelBeforeCode": [
+    "What category does this problem fall into?",
+    "What variables define the state of the system?",
+    "What data structures could represent this state?",
+    "What is the expected time complexity?",
+    "What edge cases might cause bugs?"
+  ],
+
+  "hints": [
+    "Try simulating the process step by step.",
+    "Think about how to represent each cow's position and direction.",
+    "Update positions in a loop until no more moves are possible."
+  ],
+
+  "commonMistakes": [
+    "Forgetting to update all cows correctly each step",
+    "Incorrect loop bounds",
+    "Not handling edge cases when cows collide"
+  ],
+
+  "explanation": "This problem can be solved by simulating each time step. Track positions in an array and update them according to the rules until the system stabilizes."
+}
+
+---
+
+## Design Principles
+
+- Lessons should be concise
+- Focus on reasoning, not just code
+- Avoid long editorials
+- Teach patterns that transfer to other problems

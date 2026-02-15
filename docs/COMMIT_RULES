@@ -1,0 +1,43 @@
+# Commit Rules
+
+To keep the project organized and professional, follow these commit guidelines.
+
+---
+
+## General Rules
+
+- Make small, focused commits
+- One feature or change per commit when possible
+- Write clear commit messages
+- Commit frequently
+
+---
+
+## Commit Message Format
+
+Prefix types:
+
+feat: new feature  
+fix: bug fix  
+docs: documentation changes  
+chore: setup or cleanup  
+refactor: code restructuring  
+style: formatting or UI changes  
+
+---
+
+## Examples
+
+feat: add lesson renderer  
+feat: implement drill mode UI  
+fix: correct lesson navigation bug  
+docs: update PRD  
+chore: create project structure  
+
+---
+
+## Commit Frequency Goal
+
+During active development:
+- 3–5 commits per work session
+- Consistent commits over time are better than large commits
