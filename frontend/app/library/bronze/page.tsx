@@ -27,9 +27,21 @@ export default function BronzeLibraryPage() {
         </span>
         <h1 className="text-3xl font-bold">Problems</h1>
       </div>
-      <p className="mb-8" style={{ color: "var(--muted)" }}>
+      <p className="mb-4" style={{ color: "var(--muted)" }}>
         Pick a problem. Algo-Coach guides your reasoning step-by-step before you code.
       </p>
+
+      {/* Stats */}
+      <div className="flex gap-4 mb-8">
+        <div className="text-sm">
+          <span className="font-bold" style={{ color: "var(--accent)" }}>{bronzeProblems.filter(p => p.hasSession).length}</span>
+          <span style={{ color: "var(--muted)" }}> guided sessions</span>
+        </div>
+        <div className="text-sm">
+          <span className="font-bold">{bronzeProblems.length}</span>
+          <span style={{ color: "var(--muted)" }}> total problems</span>
+        </div>
+      </div>
 
       {/* Problem List */}
       <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid var(--border)" }}>
@@ -52,7 +64,7 @@ export default function BronzeLibraryPage() {
                   {diffLabel(problem.difficulty)}
                 </span>
               </div>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex items-center gap-2 flex-wrap">
                 {problem.concepts.map((c) => (
                   <span
                     key={c}
@@ -62,16 +74,40 @@ export default function BronzeLibraryPage() {
                     {c.replace(/-/g, " ")}
                   </span>
                 ))}
+                {problem.source && (
+                  <span className="text-xs" style={{ color: "var(--muted)" }}>
+                    • {problem.source.replace("USACO Bronze, ", "")}
+                  </span>
+                )}
               </div>
             </div>
 
-            <Link
-              href={`/session/bronze/${problem.id}`}
-              className="px-4 py-2 rounded-full text-white text-sm font-semibold transition hover:opacity-90 shrink-0"
-              style={{ background: "var(--accent)" }}
-            >
-              Start
-            </Link>
+            <div className="flex items-center gap-2 shrink-0">
+              {problem.usacoUrl && (
+                <a
+                  href={problem.usacoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs px-3 py-2 rounded-full font-medium transition hover:opacity-80"
+                  style={{ border: "1px solid var(--border)", color: "var(--muted)" }}
+                >
+                  USACO ↗
+                </a>
+              )}
+              {problem.hasSession ? (
+                <Link
+                  href={`/session/bronze/${problem.id}`}
+                  className="px-4 py-2 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
+                  style={{ background: "var(--accent)" }}
+                >
+                  Start Session
+                </Link>
+              ) : (
+                <span className="px-4 py-2 rounded-full text-xs font-medium" style={{ background: "var(--card-hover)", color: "var(--muted)" }}>
+                  Coming Soon
+                </span>
+              )}
+            </div>
           </div>
         ))}
 
