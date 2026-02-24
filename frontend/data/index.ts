@@ -3,19 +3,23 @@ export type {
   Division,
   Concept,
   Problem,
+  ProblemReasoning,
   StepType,
   StepCategory,
   Choice,
+  FollowUpQuestion,
   SessionStep,
   SessionTemplate,
   DrillQuestion,
   DrillSet,
+  StepAttempt,
   UserSessionSave,
   UserDrillSave,
   UserProgress,
+  MistakeEntry,
 } from "./types";
 
-export { DIVISIONS } from "./types";
+export { DIVISIONS, XP_CONFIG } from "./types";
 
 // Data
 export { concepts, getConceptsByDivision, getConceptById, getPrerequisites, getDependents } from "./concepts";

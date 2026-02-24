@@ -1,27 +1,44 @@
 import { Problem } from "./types";
 
+// ═══════════════════════════════════════════════════════════════
+// PLACEHOLDER PROBLEMS — will be replaced with full USACO catalog
+// These conform to the new enhanced Problem type with reasoning
+// ═══════════════════════════════════════════════════════════════
+
 export const problems: Problem[] = [
-  // ═══════════════════════════════════════════════════════════
-  // BRONZE PROBLEMS
-  // ═══════════════════════════════════════════════════════════
+  // ── BRONZE ──────────────────────────────────────────────────
   {
     id: "bronze-fence-segments",
-    title: "Fence Segments",
+    title: "Fence Painting",
     division: "bronze",
     concepts: ["simulation", "rectangle-geometry"],
     difficulty: 1,
-    description: `Farmer John is painting two segments of a fence along a number line.
-
-The first segment covers positions A to B (inclusive). The second segment covers positions C to D (inclusive).
-
-Determine the total length of fence that is painted. Note that if the segments overlap, the overlapping region should only be counted once.`,
-    inputFormat:
-      "Four integers A, B, C, D on separate lines (0 ≤ A < B ≤ 100, 0 ≤ C < D ≤ 100).",
+    source: "USACO Bronze, December 2015, Problem 1",
+    usacoUrl: "http://usaco.org/index.php?page=viewproblem2&cpid=567",
+    contestId: "dec15",
+    problemNumber: 1,
+    description: "Farmer John is painting two segments of a fence along a number line. Determine the total length of fence that is painted, counting overlap only once.",
+    inputFormat: "Four integers A, B, C, D on separate lines (0 ≤ A < B ≤ 100, 0 ≤ C < D ≤ 100).",
     outputFormat: "A single integer: the total painted length.",
     sampleInput: "2\n5\n4\n8",
     sampleOutput: "6",
     constraints: "0 ≤ A < B ≤ 100, 0 ≤ C < D ≤ 100",
+    reasoning: {
+      classify: "This is an interval overlap problem — two segments on a number line with possible overlap.",
+      keyInsight: "Total painted = length1 + length2 - overlap. Overlap = max(0, min(B,D) - max(A,C)).",
+      variables: ["segment 1 start/end (A,B)", "segment 2 start/end (C,D)", "overlap length"],
+      approach: "Compute each segment's length, compute overlap using min/max, subtract overlap from total.",
+      complexity: "O(1) — just arithmetic on 4 values.",
+      edgeCases: ["Segments don't overlap at all (overlap formula must return 0, not negative)", "Segments are identical (overlap = full length)", "One segment contains the other"],
+      whyThisWorks: "The inclusion-exclusion principle: |A ∪ B| = |A| + |B| - |A ∩ B|. The max(0,...) ensures we don't get negative overlap when segments are disjoint.",
+    },
+    commonMistakes: [
+      "Forgetting max(0,...) — getting negative overlap when segments are disjoint",
+      "Using wrong formula for overlap (subtracting wrong endpoints)",
+      "Off-by-one on inclusive vs exclusive endpoints",
+    ],
     sessionId: "session-bronze-fence-segments",
+    hasSession: true,
   },
   {
     id: "bronze-milk-counting",
@@ -29,39 +46,51 @@ Determine the total length of fence that is painted. Note that if the segments o
     division: "bronze",
     concepts: ["simulation", "arrays-maps", "sorting"],
     difficulty: 1,
-    description: `Farmer John has N cows. Each cow produces a certain amount of milk per day.
-
-Given the milk production of each cow, determine which cow produces the median amount of milk. If N is odd, the median is the middle value when sorted. If N is even, output the cow that produces the lower of the two middle values.
-
-Output the original index (1-based) of the median cow.`,
-    inputFormat:
-      "Line 1: integer N (1 ≤ N ≤ 1000). Lines 2..N+1: integer milk production of each cow.",
-    outputFormat: "A single integer: the 1-based index of the median cow.",
-    sampleInput: "5\n8\n3\n9\n1\n7",
-    sampleOutput: "5",
-    constraints: "1 ≤ N ≤ 1,000. Milk values are distinct integers between 1 and 1,000,000.",
+    source: "Original (inspired by USACO Bronze sorting problems)",
+    usacoUrl: "",
+    reasoning: {
+      classify: "Sorting + index tracking — sort values but need to remember original positions.",
+      keyInsight: "You can't just sort the array — you need to track which original index each value came from. Use index-value pairs.",
+      variables: ["array of (index, milk_value) pairs", "sorted version", "median position"],
+      approach: "Pair each value with its original index. Sort by value. Find the median position. Return the original index of that element.",
+      complexity: "O(N log N) for sorting.",
+      edgeCases: ["N is even vs odd (different median rules)", "All cows produce same amount", "N = 1 (trivial case)"],
+      whyThisWorks: "Sorting gives us ordered values, and carrying the original index lets us trace back to which cow it was.",
+    },
+    commonMistakes: [
+      "Sorting and losing track of original indices",
+      "Off-by-one on median position for even/odd N",
+      "Using 0-based index when problem asks for 1-based",
+    ],
     sessionId: "session-bronze-milk-counting",
+    hasSession: true,
   },
   {
     id: "bronze-shell-game",
-    title: "Shell Shuffle",
+    title: "Shell Game",
     division: "bronze",
     concepts: ["simulation", "complete-search"],
     difficulty: 2,
-    description: `Farmer John is playing a shell game with three cups labeled 1, 2, and 3.
-
-A ball is placed under one of the cups. Then N swaps are performed. In each swap, two cups exchange positions.
-
-After all swaps, FJ guesses which cup the ball is under. Since FJ doesn't know where the ball started, determine which starting position (1, 2, or 3) would have resulted in the most correct guesses if the game were played N times with the same swaps but different guesses each round.
-
-For each swap, FJ makes a guess. Count how many of FJ's guesses would be correct for each possible starting position. Output the maximum count.`,
-    inputFormat:
-      "Line 1: integer N (1 ≤ N ≤ 100). Next N lines: three integers a, b, g — cups a and b are swapped, then FJ guesses g.",
-    outputFormat: "A single integer: the maximum number of correct guesses.",
-    sampleInput: "3\n1 2 1\n2 3 2\n1 3 1",
-    sampleOutput: "2",
-    constraints: "1 ≤ N ≤ 100. 1 ≤ a, b, g ≤ 3. a ≠ b.",
+    source: "USACO Bronze, February 2019, Problem 1",
+    usacoUrl: "http://usaco.org/index.php?page=viewproblem2&cpid=891",
+    contestId: "feb19",
+    problemNumber: 1,
+    reasoning: {
+      classify: "Simulation + complete search — simulate the game for each possible starting position.",
+      keyInsight: "There are only 3 possible starting positions. Try all 3, simulate the swaps for each, count correct guesses, take the max.",
+      variables: ["ball position (changes with swaps)", "guess count per starting position", "swap pairs"],
+      approach: "For each starting position (1,2,3): simulate all N swaps tracking ball position, count how many times ball position matches FJ's guess. Output max count.",
+      complexity: "O(3N) = O(N) — three simulations of N swaps each.",
+      edgeCases: ["Ball never matches any guess (output 0)", "All guesses correct for one starting position", "Swap involves the cup the ball is under"],
+      whyThisWorks: "With only 3 starting positions, brute force is trivially efficient. Each simulation is independent and O(N).",
+    },
+    commonMistakes: [
+      "Only trying one starting position instead of all 3",
+      "Getting swap logic wrong (swapping values vs positions)",
+      "Forgetting to reset ball position between simulations",
+    ],
     sessionId: "session-bronze-shell-game",
+    hasSession: true,
   },
   {
     id: "bronze-daisy-chains",
@@ -69,72 +98,97 @@ For each swap, FJ makes a guess. Count how many of FJ's guesses would be correct
     division: "bronze",
     concepts: ["complete-search", "simulation"],
     difficulty: 2,
-    description: `Farmer John has N flowers in a row, each with a certain number of petals.
-
-A contiguous group of flowers is called "photogenic" if at least one flower in the group has exactly the average number of petals of the group.
-
-Count the total number of photogenic contiguous groups (including individual flowers).`,
-    inputFormat:
-      "Line 1: integer N (1 ≤ N ≤ 100). Line 2: N integers, the petal count of each flower.",
-    outputFormat: "A single integer: the number of photogenic groups.",
-    sampleInput: "4\n1 1 2 3",
-    sampleOutput: "8",
-    constraints: "1 ≤ N ≤ 100. Petal counts between 1 and 1,000.",
+    source: "USACO Bronze, February 2020, Problem 2",
+    usacoUrl: "http://usaco.org/index.php?page=viewproblem2&cpid=1012",
+    contestId: "feb20",
+    problemNumber: 2,
+    reasoning: {
+      classify: "Brute force / complete search — check all O(N²) contiguous subarrays.",
+      keyInsight: "For each subarray, compute the average and check if any element equals it. The average must be an integer for any element to match it exactly.",
+      variables: ["subarray start index i", "subarray end index j", "running sum", "average"],
+      approach: "For every pair (i,j), compute sum and average of elements i..j. Check if any element in that range equals the average. Count valid pairs.",
+      complexity: "O(N³) naively, O(N²) if you maintain running sum. N ≤ 100 so either works.",
+      edgeCases: ["Single flower (always photogenic — it equals its own average)", "All flowers same petals (every subarray is photogenic)", "Average is not an integer (can't match any element)"],
+      whyThisWorks: "N ≤ 100 means O(N²) or even O(N³) is fast enough. We just need to check every possible contiguous group.",
+    },
+    commonMistakes: [
+      "Forgetting that single flowers count as photogenic groups",
+      "Using integer division and missing that average might not be a whole number",
+      "Not checking ALL elements in range against the average (stopping at first)",
+    ],
     sessionId: "session-bronze-daisy-chains",
+    hasSession: false,
   },
   {
     id: "bronze-cow-tipping",
-    title: "Grid Flipping",
+    title: "Cow Tipping",
     division: "bronze",
     concepts: ["simulation", "complete-search", "ad-hoc"],
     difficulty: 3,
-    description: `You are given an N×N grid of 0s and 1s.
-
-In one operation, you can choose any rectangle with its bottom-right corner at (N,N) and flip all values in that rectangle (0→1, 1→0).
-
-Determine the minimum number of operations needed to make the entire grid all 0s.`,
-    inputFormat: "Line 1: integer N (1 ≤ N ≤ 10). Next N lines: N characters, each '0' or '1'.",
-    outputFormat: "A single integer: the minimum number of operations.",
-    sampleInput: "3\n001\n011\n111",
-    sampleOutput: "3",
-    constraints: "1 ≤ N ≤ 10.",
+    source: "USACO Bronze, January 2017, Problem 3",
+    usacoUrl: "http://usaco.org/index.php?page=viewproblem2&cpid=689",
+    contestId: "jan17",
+    problemNumber: 3,
+    reasoning: {
+      classify: "Greedy / ad-hoc with a key observation — process from bottom-right corner backwards.",
+      keyInsight: "Work from bottom-right to top-left. If cell (i,j) is 1, you MUST flip the rectangle (1,1)→(i,j). This greedy approach is optimal.",
+      variables: ["N×N grid state", "flip count", "current cell being processed"],
+      approach: "Iterate from (N,N) backwards to (1,1). If current cell is 1, flip all cells in rectangle from (1,1) to current position. Count flips.",
+      complexity: "O(N⁴) — N² cells, each flip touches up to N² cells. Fine for N ≤ 10.",
+      edgeCases: ["Grid already all zeros (0 operations)", "Single cell grid", "Entire grid is 1s"],
+      whyThisWorks: "The bottom-right corner can only be affected by a flip that includes it. So if it's 1, we must flip. After flipping, that corner is fixed. Work backwards.",
+    },
+    commonMistakes: [
+      "Trying to process top-left to bottom-right (wrong direction)",
+      "Not realizing flips must include bottom-right corner",
+      "Overcomplicating with BFS/DFS when it's purely arithmetic",
+    ],
     sessionId: "session-bronze-cow-tipping",
+    hasSession: false,
   },
 
-  // ═══════════════════════════════════════════════════════════
-  // SILVER PROBLEMS
-  // ═══════════════════════════════════════════════════════════
+  // ── SILVER (placeholders) ───────────────────────────────────
   {
     id: "silver-subarray-sums",
     title: "Subarray Sum Target",
     division: "silver",
     concepts: ["prefix-sums", "arrays-maps"],
     difficulty: 1,
-    description: `Given an array of N integers, count the number of contiguous subarrays whose sum equals a target value S.`,
-    inputFormat: "Line 1: integers N and S. Line 2: N integers.",
-    outputFormat: "A single integer: the count of subarrays summing to S.",
-    sampleInput: "5 4\n1 2 1 3 1",
-    sampleOutput: "2",
-    constraints: "1 ≤ N ≤ 200,000. -10⁹ ≤ values ≤ 10⁹.",
+    source: "Original (prefix sums pattern)",
+    usacoUrl: "",
+    reasoning: {
+      classify: "Prefix sums + hash map — classic subarray sum pattern.",
+      keyInsight: "If prefix[j] - prefix[i] = S, then subarray (i,j] sums to S. Use a hash map to count prefix values seen so far.",
+      variables: ["prefix sum array", "hash map of prefix sum frequencies", "running count"],
+      approach: "Build prefix sums. For each prefix[j], check if prefix[j]-S exists in the map. Add prefix[j] to map.",
+      complexity: "O(N) time, O(N) space.",
+      edgeCases: ["Negative numbers in array", "S = 0", "Entire array sums to S"],
+      whyThisWorks: "Prefix sums convert subarray sum queries into subtraction. Hash map gives O(1) lookup for complement values.",
+    },
+    commonMistakes: ["Forgetting to initialize map with prefix[0]=0", "Off-by-one in prefix indexing"],
     sessionId: "session-silver-subarray-sums",
+    hasSession: false,
   },
   {
     id: "silver-cow-search",
-    title: "Cow Placement Search",
+    title: "Aggressive Cows",
     division: "silver",
     concepts: ["binary-search", "sorting"],
     difficulty: 1,
-    description: `Farmer John wants to place C cows in N stalls arranged along a line.
-
-The stalls are at given positions. FJ wants to maximize the minimum distance between any two cows.
-
-What is the largest possible minimum distance?`,
-    inputFormat: "Line 1: integers N and C. Next N lines: position of each stall.",
-    outputFormat: "A single integer: the largest minimum distance.",
-    sampleInput: "5 3\n1\n2\n8\n4\n9",
-    sampleOutput: "3",
-    constraints: "2 ≤ C ≤ N ≤ 100,000. Positions ≤ 10⁹.",
+    source: "Original (binary search on answer pattern)",
+    usacoUrl: "",
+    reasoning: {
+      classify: "Binary search on the answer — search for the maximum minimum distance.",
+      keyInsight: "Binary search on the distance D. For each D, greedily check if you can place C cows with at least D distance apart.",
+      variables: ["sorted stall positions", "binary search bounds (lo, hi)", "distance being tested"],
+      approach: "Sort stalls. Binary search on D. For each D, greedily place cows left-to-right skipping stalls too close.",
+      complexity: "O(N log N) for sorting + O(N log(max_pos)) for binary search with greedy check.",
+      edgeCases: ["Only 2 cows (answer is max distance)", "All stalls same position", "C = N (use every stall)"],
+      whyThisWorks: "The feasibility function is monotonic: if D works, any smaller D also works. This makes binary search valid.",
+    },
+    commonMistakes: ["Forgetting to sort stalls first", "Wrong binary search bounds"],
     sessionId: "session-silver-cow-search",
+    hasSession: false,
   },
   {
     id: "silver-connected-fields",
@@ -142,39 +196,43 @@ What is the largest possible minimum distance?`,
     division: "silver",
     concepts: ["flood-fill", "dfs", "bfs"],
     difficulty: 2,
-    description: `Farmer John's farm is represented as an N×M grid. Each cell is either grass (.) or a fence (#).
-
-A "field" is a connected region of grass cells (connected horizontally or vertically, not diagonally).
-
-Count the number of fields.`,
-    inputFormat: "Line 1: integers N and M. Next N lines: M characters each.",
-    outputFormat: "A single integer: the number of fields.",
-    sampleInput: "4 5\n.#.#.\n.#...\n..#.#\n.#...",
-    sampleOutput: "3",
-    constraints: "1 ≤ N, M ≤ 1,000.",
+    source: "Original (flood fill pattern)",
+    usacoUrl: "",
+    reasoning: {
+      classify: "Flood fill / connected components — count distinct regions using DFS or BFS.",
+      keyInsight: "Each unvisited grass cell starts a new DFS/BFS that marks all connected grass cells as visited. Count how many times you start a new search.",
+      variables: ["grid", "visited array", "component count", "DFS/BFS stack/queue"],
+      approach: "Iterate over all cells. When you find unvisited grass, increment count and flood fill to mark entire connected region.",
+      complexity: "O(N×M) — each cell visited at most once.",
+      edgeCases: ["Entire grid is grass (1 field)", "Entire grid is fences (0 fields)", "Diagonal cells NOT connected"],
+      whyThisWorks: "DFS/BFS from any cell reaches exactly its connected component. Counting search initiations counts components.",
+    },
+    commonMistakes: ["Connecting diagonally when only horizontal/vertical counts", "Stack overflow on large grids with recursive DFS"],
     sessionId: "session-silver-connected-fields",
+    hasSession: false,
   },
 
-  // ═══════════════════════════════════════════════════════════
-  // GOLD PROBLEMS
-  // ═══════════════════════════════════════════════════════════
+  // ── GOLD (placeholders) ─────────────────────────────────────
   {
     id: "gold-max-gift-value",
     title: "Maximum Gift Value",
     division: "gold",
     concepts: ["dp-knapsack"],
     difficulty: 1,
-    description: `You have N gifts to choose from. Each gift has a weight and a value.
-
-Your bag can hold at most W total weight. You can take each gift at most once.
-
-What is the maximum total value you can carry?`,
-    inputFormat: "Line 1: integers N and W. Next N lines: weight and value of each gift.",
-    outputFormat: "A single integer: the maximum value.",
-    sampleInput: "4 7\n1 1\n3 4\n4 5\n5 7",
-    sampleOutput: "9",
-    constraints: "1 ≤ N ≤ 1,000. 1 ≤ W ≤ 10,000.",
+    source: "Original (0/1 knapsack pattern)",
+    usacoUrl: "",
+    reasoning: {
+      classify: "0/1 Knapsack DP — maximize value with weight constraint, each item used at most once.",
+      keyInsight: "dp[w] = max value achievable with weight capacity w. Process items in order, iterate weight backwards to prevent reuse.",
+      variables: ["dp array of size W+1", "item weights and values", "current capacity"],
+      approach: "Initialize dp[0..W] = 0. For each item, for w = W down to item.weight: dp[w] = max(dp[w], dp[w-item.weight] + item.value).",
+      complexity: "O(N×W) time, O(W) space.",
+      edgeCases: ["Item heavier than bag (skip it)", "W = 0 (can't take anything)", "All items same weight"],
+      whyThisWorks: "Iterating weight backwards ensures each item is only used once per DP state. Forward iteration would allow reuse (unbounded knapsack).",
+    },
+    commonMistakes: ["Iterating weight forward (creates unbounded knapsack)", "Forgetting to handle items heavier than W"],
     sessionId: "session-gold-max-gift-value",
+    hasSession: false,
   },
   {
     id: "gold-shortest-delivery",
@@ -182,18 +240,20 @@ What is the maximum total value you can carry?`,
     division: "gold",
     concepts: ["shortest-paths"],
     difficulty: 2,
-    description: `Farmer John needs to deliver milk from the farm (node 1) to the store (node N).
-
-There are N locations and M roads between them, each with a travel time.
-
-Find the minimum travel time from node 1 to node N.`,
-    inputFormat:
-      "Line 1: integers N and M. Next M lines: integers u, v, w (road between u and v with time w).",
-    outputFormat: "A single integer: the minimum travel time, or -1 if impossible.",
-    sampleInput: "4 5\n1 2 3\n1 3 1\n2 4 5\n3 2 1\n3 4 6",
-    sampleOutput: "5",
-    constraints: "2 ≤ N ≤ 100,000. 1 ≤ M ≤ 200,000. 1 ≤ w ≤ 10⁶.",
+    source: "Original (Dijkstra pattern)",
+    usacoUrl: "",
+    reasoning: {
+      classify: "Single-source shortest path — Dijkstra's algorithm with priority queue.",
+      keyInsight: "Use a min-heap to always process the closest unvisited node. Relax edges greedily.",
+      variables: ["distance array", "priority queue (min-heap)", "visited set", "adjacency list"],
+      approach: "Initialize dist[1]=0, all others infinity. Push (0,1) to heap. Pop minimum, relax neighbors, push improvements.",
+      complexity: "O((N+M) log N) with binary heap.",
+      edgeCases: ["No path exists (output -1)", "Direct edge from 1 to N", "Multiple edges between same nodes"],
+      whyThisWorks: "Dijkstra's greedy choice is optimal for non-negative weights: the node with smallest tentative distance is finalized.",
+    },
+    commonMistakes: ["Using Dijkstra with negative weights", "Not checking if node already finalized before processing"],
     sessionId: "session-gold-shortest-delivery",
+    hasSession: false,
   },
 ];
 
