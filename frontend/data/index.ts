@@ -21,6 +21,18 @@ export type {
 
 export { DIVISIONS, XP_CONFIG } from "./types";
 
+// Bronze database
+export {
+  bronzeProblems,
+  bronzeSessions,
+  getBronzeProblemById,
+  getBronzeSessionByProblemId,
+  getBronzeProblemsByContest,
+  getBronzeProblemsByConcept,
+  getBronzeProblemsWithSessions,
+  getBronzeSessionById,
+} from "./bronze";
+
 // Data
 export { concepts, getConceptsByDivision, getConceptById, getPrerequisites, getDependents } from "./concepts";
 export { problems, getProblemsByDivision, getProblemById, getProblemsByConcept } from "./problems";
