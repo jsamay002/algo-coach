@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --accent: #0d9488;
+  --accent-light: #14b8a6;
+  --accent-dark: #0f766e;
+  --accent-subtle: #f0fdfa;
+  --bronze: #d97706;
+  --bronze-bg: #fffbeb;
+  --silver: #64748b;
+  --silver-bg: #f8fafc;
+  --gold: #ca8a04;
+  --gold-bg: #fefce8;
+  --background: #fafafa;
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --card: #ffffff;
+  --card-hover: #f8fafc;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0a0a0f;
+    --foreground: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #1e293b;
+    --card: #0f172a;
+    --card-hover: #1e293b;
+    --accent-subtle: #042f2e;
+    --bronze-bg: #1c1105;
+    --silver-bg: #0f172a;
+    --gold-bg: #1a1505;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #f0fdfa 0%, #eff6ff 50%, #faf5ff 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .hero-gradient {
+    background: linear-gradient(135deg, #042f2e 0%, #0c1929 50%, #1a0c2e 100%);
+  }
 }

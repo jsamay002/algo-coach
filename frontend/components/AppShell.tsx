@@ -14,30 +14,33 @@ const NAV_ITEMS = [
   { href: "/settings", label: "Settings" },
 ];
 
-/**
- * AppShell — persistent layout wrapper for the entire app.
- *
- * Provides:
- * 1. Sticky top navigation bar with the 5 primary tabs
- * 2. Centered content container (max-w-4xl) with consistent padding
- * 3. Branding in the nav (logo/title)
- *
- * Every page renders inside {children} without needing its own
- * <main> wrapper, padding, or max-width — AppShell handles it.
- */
 export default function AppShell({ children }: AppShellProps) {
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+    <div className="min-h-screen" style={{ background: "var(--background)", color: "var(--foreground)" }}>
       {/* ── Top Nav ── */}
-      <header className="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 backdrop-blur-sm">
+      <header
+        className="sticky top-0 z-50 backdrop-blur-md"
+        style={{
+          borderBottom: "1px solid var(--border)",
+          background: "color-mix(in srgb, var(--background) 85%, transparent)",
+        }}
+      >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
           {/* Brand */}
-          <span className="text-lg font-bold tracking-tight select-none">
-            Algo-Coach
-          </span>
+          <a href="/" className="flex items-center gap-1.5 select-none">
+            <span
+              className="text-xl font-extrabold tracking-tight"
+              style={{ color: "var(--accent)" }}
+            >
+              algo
+            </span>
+            <span className="text-xl font-extrabold tracking-tight">
+              coach.
+            </span>
+          </a>
 
           {/* Nav links */}
-          <nav className="flex items-center gap-1">
+          <nav className="flex items-center gap-0.5">
             {NAV_ITEMS.map((item) => (
               <NavLink key={item.href} href={item.href} label={item.label} />
             ))}
@@ -46,9 +49,7 @@ export default function AppShell({ children }: AppShellProps) {
       </header>
 
       {/* ── Page content ── */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-        {children}
-      </main>
+      <main>{children}</main>
     </div>
   );
 }

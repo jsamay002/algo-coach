@@ -1,75 +1,85 @@
 import Link from "next/link";
+import { problems } from "@/data";
 
-/**
- * Static Bronze problem data.
- * In Task B we'll move this to a shared data/problems.ts file.
- * For now, inline is fine to get the page working.
- */
-const BRONZE_PROBLEMS = [
-  {
-    id: "sample-1",
-    title: "Sample Problem 1",
-    subtitle: "Learn the full Model-Before-Code workflow on one example.",
-    tags: ["Simulation", "Ad-hoc"],
-    steps: 5,
-  },
-];
+const bronzeProblems = problems.filter((p) => p.division === "bronze");
 
-/**
- * Bronze Library — lists all Bronze-level problems with metadata.
- * Each card links to /session/bronze/[id] to start the guided session.
- */
+const diffLabel = (d: number) =>
+  d === 1 ? "Easy" : d === 2 ? "Normal" : "Hard";
+const diffColor = (d: number) =>
+  d === 1 ? "#22c55e" : d === 2 ? "#f59e0b" : "#ef4444";
+
 export default function BronzeLibraryPage() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-2">Bronze</h1>
-      <p className="text-gray-600 dark:text-gray-300 mb-8">
-        Pick a problem. Algo-Coach will guide your reasoning before you code.
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 mb-6 text-sm" style={{ color: "var(--muted)" }}>
+        <Link href="/library" className="hover:underline">Library</Link>
+        <span>/</span>
+        <span style={{ color: "var(--bronze)" }} className="font-medium">Bronze</span>
+      </div>
+
+      <div className="flex items-center gap-3 mb-2">
+        <span
+          className="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full"
+          style={{ background: "var(--bronze-bg)", color: "var(--bronze)" }}
+        >
+          Bronze
+        </span>
+        <h1 className="text-3xl font-bold">Problems</h1>
+      </div>
+      <p className="mb-8" style={{ color: "var(--muted)" }}>
+        Pick a problem. Algo-Coach guides your reasoning step-by-step before you code.
       </p>
 
-      <div className="grid gap-4">
-        {BRONZE_PROBLEMS.map((problem) => (
+      {/* Problem List */}
+      <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid var(--border)" }}>
+        {bronzeProblems.map((problem, i) => (
           <div
             key={problem.id}
-            className="rounded-xl border border-gray-200 dark:border-gray-800 p-5 flex items-start justify-between gap-4"
+            className="flex items-center justify-between gap-4 px-6 py-4 transition-colors"
+            style={{
+              background: "var(--card)",
+              borderTop: i > 0 ? "1px solid var(--border)" : "none",
+            }}
           >
-            <div>
-              <h2 className="text-lg font-semibold">{problem.title}</h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                {problem.subtitle}
-              </p>
-              <div className="mt-2 flex gap-2 flex-wrap">
-                {problem.tags.map((tag) => (
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2.5 mb-1">
+                <h3 className="font-semibold text-base truncate">{problem.title}</h3>
+                <span
+                  className="text-xs font-semibold px-2 py-0.5 rounded-full shrink-0"
+                  style={{ color: diffColor(problem.difficulty), background: `color-mix(in srgb, ${diffColor(problem.difficulty)} 12%, transparent)` }}
+                >
+                  {diffLabel(problem.difficulty)}
+                </span>
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                {problem.concepts.map((c) => (
                   <span
-                    key={tag}
-                    className="text-xs px-2 py-1 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300"
+                    key={c}
+                    className="text-xs px-2 py-0.5 rounded-md font-medium"
+                    style={{ background: "var(--accent-subtle)", color: "var(--accent)" }}
                   >
-                    {tag}
+                    {c.replace(/-/g, " ")}
                   </span>
                 ))}
-                <span className="text-xs px-2 py-1 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
-                  {problem.steps} steps
-                </span>
               </div>
             </div>
 
             <Link
               href={`/session/bronze/${problem.id}`}
-              className="px-5 py-2.5 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition text-sm font-medium whitespace-nowrap"
+              className="px-4 py-2 rounded-full text-white text-sm font-semibold transition hover:opacity-90 shrink-0"
+              style={{ background: "var(--accent)" }}
             >
-              Start Session
+              Start
             </Link>
           </div>
         ))}
-      </div>
 
-      <div className="mt-8">
-        <Link
-          href="/library"
-          className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
-        >
-          &larr; All Divisions
-        </Link>
+        {bronzeProblems.length === 0 && (
+          <div className="px-6 py-12 text-center" style={{ color: "var(--muted)" }}>
+            No problems yet. Check back soon!
+          </div>
+        )}
       </div>
     </div>
   );
